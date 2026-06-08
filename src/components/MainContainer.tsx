@@ -10,10 +10,12 @@ import TechStack from "./TechStack";
 import HireMe from "./HireMe";
 import Cursor from "./Cursor";
 import setSplitText from "./utils/splitText";
+import { setAllTimeline } from "./utils/GsapScroll";
 
 const MainContainer = () => {
   useEffect(() => {
     setSplitText();
+    setAllTimeline();
     window.addEventListener("resize", setSplitText);
     return () => window.removeEventListener("resize", setSplitText);
   }, []);

@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { GLTF, GLTFLoader } from "three-stdlib";
-import { setCharTimeline, setAllTimeline } from "../../utils/GsapScroll";
+import { setCharTimeline } from "../../utils/GsapScroll";
 
 const setCharacter = (
   renderer: THREE.WebGLRenderer,
@@ -37,7 +37,6 @@ const setCharacter = (
             });
             resolve(gltf);
             setCharTimeline(character, camera);
-            setAllTimeline();
           },
           undefined,
           (error) => {
