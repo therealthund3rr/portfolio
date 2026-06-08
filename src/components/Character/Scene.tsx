@@ -54,7 +54,7 @@ const Scene = () => {
       let screenLight: THREE.Object3D | null = null;
       const clock = new THREE.Clock();
       let mixer: THREE.AnimationMixer | null = null;
-      let debounce: ReturnType<typeof setTimeout>;
+      let debounce: ReturnType<typeof setTimeout> | undefined;
       let onResize: (() => void) | null = null;
       let headEnabled = false;
 
