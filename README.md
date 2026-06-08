@@ -33,7 +33,7 @@ A single-page experience with six sections:
 ## Technical highlights
 
 **3D character (Three.js + GLB)**
-The character is a custom GLB model (~47 MB, tracked via Git LFS). The scene uses a fully manual lighting rig — directional key light, cool fill, and a blue rim light (`#0055ff`) that adjusts emissive intensity as you scroll. The head bone tracks the cursor in world space via raycasting on `mousemove`.
+The character is a custom GLB model (~47 MB). The scene uses a fully manual lighting rig — directional key light, cool fill, and a blue rim light (`#0055ff`) that adjusts emissive intensity as you scroll. The head bone tracks the cursor in world space via raycasting on `mousemove`.
 
 **Custom cursor**
 Blue dot (`#3399ff`) with `mix-blend-mode: difference` — inverts whatever is underneath it. On hover over the social icons, it morphs into a vertical pill that wraps the full icon stack via `getBoundingClientRect`. Lag implemented with a `requestAnimationFrame` lerp loop.
@@ -52,7 +52,7 @@ White overlay expands to full-screen black, then collapses cinematically before 
 |---|---|
 | Build | Vite 6, TypeScript 5 |
 | UI | React 18 |
-| 3D | Three.js r170, GLB (Git LFS) |
+| 3D | Three.js r170, GLB |
 | Animation | GSAP 3, ScrollTrigger, Lenis |
 | Icons | react-icons (Tabler) |
 | Deploy | Vercel (auto-deploy on push) |
@@ -73,8 +73,9 @@ src/
 ├── config.ts               # All content (career, projects, tech stack)
 └── main.tsx
 public/
-├── character.glb           # 3D model (Git LFS — ~47 MB)
-└── char_enviorment.hdr     # HDR environment map (Git LFS)
+├── character.glb           # 3D model (~47 MB)
+├── char_enviorment.hdr     # HDR environment map
+└── tech-bg.mp4             # Tech stack background video
 ```
 
 ---
@@ -88,8 +89,4 @@ npm install
 npm run dev
 ```
 
-> **Git LFS required** for the 3D assets. Install it first:
-> ```bash
-> git lfs install
-> git lfs pull
-> ```
+That's it — the 3D model and other assets are committed directly to the repo, so a plain `git clone` pulls everything you need.
