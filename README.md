@@ -91,9 +91,3 @@ npm run dev
 > git lfs install
 > git lfs pull
 > ```
-
----
-
-## License
-
-MIT
