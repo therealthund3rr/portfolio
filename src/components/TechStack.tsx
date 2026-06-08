@@ -85,6 +85,14 @@ const TechStack = () => {
     <div className="techstack-section" id="techstack">
       <div className="techstack-bg" aria-hidden="true">
         <div className="techstack-bg-grid" />
+        <video
+          className="techstack-bg-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          src="/tech-bg.mp4"
+        />
       </div>
       <div className="techstack-content">
         <h2 className="techstack-heading title">Tech Stack</h2>
