@@ -1,0 +1,180 @@
+.career-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  width: var(--cWidth);
+  max-width: var(--cMaxWidth);
+  margin: auto;
+  padding: 100px 0;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 9;
+}
+
+.career-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.career-heading {
+  font-size: clamp(36px, 5vw, 72px);
+  font-weight: 600;
+  line-height: 1.05;
+  margin: 0;
+  opacity: 0;
+}
+
+.career-amp {
+  font-style: italic;
+  color: var(--accentColor, #0055ff);
+}
+
+.career-timeline-wrap {
+  display: flex;
+  gap: 40px;
+}
+
+.career-timeline {
+  flex-shrink: 0;
+  width: 2px;
+  position: relative;
+  border-radius: 2px;
+  /* scaleY starts at 0 — GSAP scrub grows it from top */
+  transform: scaleY(0);
+  transform-origin: top center;
+  background: linear-gradient(to bottom, var(--accentColor, #0055ff) 0%, rgba(0, 85, 255, 0.2) 100%);
+}
+
+.career-dot {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accentColor, #0055ff);
+  box-shadow: 0 0 6px 3px rgba(0, 85, 255, 0.6), 0 0 18px 8px rgba(0, 85, 255, 0.25);
+  animation: dotPulse 1.2s linear infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { box-shadow: 0 0 6px 3px rgba(0, 85, 255, 0.6), 0 0 18px 8px rgba(0, 85, 255, 0.25); }
+  50% { box-shadow: 0 0 10px 5px rgba(0, 85, 255, 0.8), 0 0 30px 12px rgba(0, 85, 255, 0.4); }
+}
+
+.career-items {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.career-item {
+  padding: 32px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  position: relative;
+  opacity: 0;
+}
+
+.career-item::before {
+  content: "";
+  position: absolute;
+  left: -44px;
+  top: 40px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateX(-50%);
+}
+
+.career-type-study::before {
+  background: var(--accentColor, #0055ff);
+  box-shadow: 0 0 8px rgba(0, 85, 255, 0.5);
+}
+
+.career-type-project::before {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.career-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.career-item-info {
+  flex: 1;
+}
+
+.career-title {
+  font-size: clamp(16px, 2vw, 22px);
+  font-weight: 600;
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
+}
+
+.career-company {
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.career-period {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.25);
+  text-transform: uppercase;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.career-type-study .career-period {
+  color: var(--accentColor, #0055ff);
+  opacity: 0.8;
+}
+
+.career-desc {
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 300;
+  margin: 0;
+  max-width: 540px;
+}
+
+.career-bar-track {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.07);
+  margin-top: 18px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+  max-width: 540px;
+}
+
+.career-bar-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0%;
+  background: var(--accentColor, #0055ff);
+  border-radius: 2px;
+}
+
+.career-type-background .career-bar-fill {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+@media (max-width: 768px) {
+  .career-item::before { display: none; }
+  .career-timeline { display: none; }
+}

@@ -1,0 +1,111 @@
+.hireme-section {
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 9;
+  box-sizing: border-box;
+}
+
+.hireme-container {
+  width: var(--cWidth);
+  max-width: var(--cMaxWidth);
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 80px 0;
+  box-sizing: border-box;
+}
+
+.hireme-pre {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.hireme-heading {
+  font-size: clamp(56px, 8vw, 130px);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin: 0;
+  color: #fff;
+}
+
+.hireme-accent {
+  color: var(--accentColor, #0055ff);
+  font-style: italic;
+}
+
+.hireme-actions {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.hireme-email {
+  font-size: clamp(14px, 2vw, 22px);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  padding-bottom: 2px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.hireme-email:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.hireme-socials {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.hireme-socials a {
+  font-size: 22px;
+  color: rgba(255, 255, 255, 0.35);
+  transition: color 0.2s ease;
+  display: flex;
+}
+
+.hireme-socials a:hover {
+  color: #fff;
+}
+
+.hireme-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 24px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.2);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 768px) {
+  .hireme-section {
+    max-height: none;
+    min-height: 100svh;
+  }
+  .hireme-heading {
+    font-size: clamp(40px, 12vw, 80px);
+  }
+  .hireme-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+}

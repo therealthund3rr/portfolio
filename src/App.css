@@ -1,0 +1,27 @@
+.section-container {
+  width: var(--cMaxWidth);
+  max-width: calc(100% - 80px);
+  margin: 0 auto;
+}
+
+.title,
+.para {
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+  word-spacing: 0.1em;
+}
+
+/* Preserve word spacing after TextSplitter wraps words in spans */
+.split-word {
+  display: inline-block;
+  margin-right: 0.25em;
+}
+.split-word:last-child {
+  margin-right: 0;
+}
+
+@media only screen and (max-width: 768px) {
+  .section-container {
+    max-width: calc(100% - 40px);
+  }
+}

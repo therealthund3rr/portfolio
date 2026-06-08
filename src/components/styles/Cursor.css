@@ -1,0 +1,33 @@
+.cursor-main {
+  --size: 0px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50px;
+  pointer-events: none;
+  z-index: 99999;
+  background-color: #3399ff;
+  box-shadow: 0px 0px 30px 0px rgba(30, 140, 255, 0.9);
+  mix-blend-mode: difference;
+  will-change: transform;
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+.cursor-icons {
+  width: 30px;
+  height: calc(var(--cursorH, 200px) - 20px);
+  transition: width 0.5s ease-out, height 0.5s ease-in-out;
+}
+
+.cursor-disable {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+@media (hover: hover) and (min-width: 600px) {
+  .cursor-main {
+    --size: 50px;
+  }
+}
