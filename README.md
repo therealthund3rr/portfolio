@@ -9,7 +9,9 @@
 
 Personal portfolio — dark, minimal, interactive. Built around a real-time 3D character model rendered in WebGL with mouse-reactive lighting and scroll-driven animations throughout.
 
-**[Live →](https://therealthund3rr.vercel.app)**
+**[Live →](https://portfolio-gray-three-12.vercel.app/)**
+
+![Preview](.github/preview.png)
 
 ---
 
