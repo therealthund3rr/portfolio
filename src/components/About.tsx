@@ -7,7 +7,9 @@ const About = () => {
       <div className="about-me about-container section-container">
         <div className="about-text">
           <p className="about-label">About Me</p>
-          <p className="para about-bio">{config.about.description}</p>
+          {config.about.description.split("\n\n").map((para, i) => (
+            <p key={i} className="para about-bio">{para}</p>
+          ))}
         </div>
       </div>
     </div>
