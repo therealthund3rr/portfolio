@@ -1,28 +1,25 @@
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState } from "react";
 import "./styles/Work.css";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { config } from "../config";
-import { TbLayoutDashboard, TbBuildingStore, TbBrain, TbBrandWhatsapp } from "react-icons/tb";
+import WorkModal from "./WorkModal";
 
 gsap.registerPlugin(ScrollTrigger);
+
+type WorkProject = (typeof config.work)[number];
 
 const statusLabel: Record<string, string> = {
   active: "Active",
   wip: "In Progress",
   shipped: "Shipped",
-};
-
-const iconMap: Record<string, ReactNode> = {
-  dashboard: <TbLayoutDashboard />,
-  agency: <TbBuildingStore />,
-  ai: <TbBrain />,
-  bot: <TbBrandWhatsapp />,
+  completed: "Completed",
 };
 
 const Work = () => {
+  const [selected, setSelected] = useState<WorkProject | null>(null);
+
   useEffect(() => {
-    // Reveal: heading first, then cards stagger in
     const revealTl = gsap.timeline({
       scrollTrigger: {
         trigger: ".work-section",
@@ -88,37 +85,65 @@ const Work = () => {
   }, []);
 
   return (
-    <div className="work-section" id="work">
-      <div className="work-header-row">
-        <h2 className="work-heading">Selected Work</h2>
-        <span className="work-count">{config.work.length} projects</span>
-      </div>
-      <div className="work-track">
-        {config.work.map((project, i) => (
-          <div className="work-card" key={i}>
-            <div className="work-card-visual">
-              <div className="work-card-placeholder">
-                {"image" in project && project.image ? (
-                  <img src={project.image} alt={project.title} className="work-card-logo" />
-                ) : "icon" in project && project.icon ? (
-                  <span className="work-card-icon">{iconMap[project.icon as string]}</span>
+    <>
+      <div className="work-section" id="work">
+        <div className="work-header-row">
+          <h2 className="work-heading">Selected Work</h2>
+          <span className="work-count">{config.work.length} projects</span>
+        </div>
+        <div className="work-track">
+          {config.work.map((project, i) => (
+            <div
+              className="work-card"
+              key={i}
+              onClick={() => setSelected(project)}
+            >
+              <div className="work-card-visual">
+                <div
+                  className="work-card-gradient"
+                  style={{
+                    background: `linear-gradient(135deg, ${project.gradient[0]}, ${project.gradient[1]})`,
+                  }}
+                />
+                {project.logo ? (
+                  project.logo.endsWith(".svg") ? (
+                    <img
+                      src={project.logo}
+                      alt={project.title}
+                      className="work-card-logo-svg"
+                    />
+                  ) : (
+                    <div
+                      className="work-card-logo-bg"
+                      style={{
+                        backgroundImage: `url(${project.logo})`,
+                        backgroundPosition: project.logoPosition ?? "50% 50%",
+                        backgroundSize: project.logoSize ?? "600%",
+                        backgroundRepeat: "no-repeat",
+                      }}
+                    />
+                  )
                 ) : (
-                  <span className="work-card-initial">{project.title.charAt(0)}</span>
+                  <div className="work-card-abbr">
+                    {project.title.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase()}
+                  </div>
                 )}
+                <span className={`work-card-status work-status-${project.status}`}>
+                  {statusLabel[project.status]}
+                </span>
               </div>
-              <span className={`work-card-status work-status-${project.status}`}>
-                {statusLabel[project.status]}
-              </span>
+              <div className="work-card-info">
+                <h3 className="work-card-title">{project.title}</h3>
+                <p className="work-card-tech">{project.tech}</p>
+                <p className="work-card-desc">{project.desc}</p>
+              </div>
             </div>
-            <div className="work-card-info">
-              <h3 className="work-card-title">{project.title}</h3>
-              <p className="work-card-tech">{project.tech}</p>
-              <p className="work-card-desc">{project.desc}</p>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+
+      <WorkModal project={selected} onClose={() => setSelected(null)} />
+    </>
   );
 };
 

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <!-- Midnight navy → cobalt → sky cerulean. Dark anchor gives real weight against white. -->
+    <linearGradient id="grad" x1="172" y1="852" x2="852" y2="172" gradientUnits="userSpaceOnUse">
+      <stop offset="0%"   stop-color="#091928"/>
+      <stop offset="50%"  stop-color="#1D4ED8"/>
+      <stop offset="100%" stop-color="#38BDF8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="224" fill="#FFFFFF"/>
+  <circle cx="512" cy="512" r="342" fill="none" stroke="url(#grad)" stroke-width="80"/>
+</svg>
