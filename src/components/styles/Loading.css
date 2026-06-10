@@ -58,7 +58,9 @@
   white-space: nowrap;
 }
 
-/* The pill container — sits in front of marquee */
+/* The pill container — sits in front of marquee.
+   The expand animates transform (compositor-only) instead of
+   min-width/height: identical visual, zero Cumulative Layout Shift. */
 .loading-wrap {
   padding: 6px;
   position: relative;
@@ -66,12 +68,9 @@
   border-radius: 100px;
   background-color: #000;
   overflow: hidden;
-  /* min-width/height must start at 0 so CSS has a value to transition FROM */
-  min-width: 0;
-  min-height: 0;
-  transition: min-width 0.9s cubic-bezier(0.33, 0.11, 1, 0.72),
-              min-height 0.9s cubic-bezier(0.33, 0.11, 1, 0.72),
-              border-radius 0.9s cubic-bezier(0.33, 0.11, 1, 0.72);
+  transform: scale(1);
+  will-change: transform;
+  transition: transform 0.9s cubic-bezier(0.33, 0.11, 1, 0.72);
   transition-delay: 0.1s;
   display: flex;
   justify-content: center;
@@ -79,12 +78,10 @@
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.18);
 }
 
-/* Expand to cover full viewport */
+/* Expand to cover full viewport — uniform scale keeps the capsule shape */
 .loading-expand {
   transition-delay: 0ms;
-  min-width: calc(100vw + 5000px) !important;
-  min-height: calc(100vh + 500px) !important;
-  border-radius: 5000px !important;
+  transform: scale(45);
   box-shadow: none;
 }
 
@@ -123,10 +120,10 @@
   transition: width 0.12s ease;
 }
 
-/* Hide bar content when expanding */
+/* Hide bar content immediately when expanding (content would zoom with the scale) */
 .loading-expand .loading-bar-outer {
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.08s ease;
 }
 
 /* Mobile: smaller pill, bigger marquee so the background text stays visible */
