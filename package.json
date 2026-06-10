@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "vite --host",
     "build": "tsc -b && vite build",
-    "preview": "vite preview",
-    "encrypt": "node scripts/encrypt-glb.mjs"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

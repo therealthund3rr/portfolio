@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { GLTF, GLTFLoader } from "three-stdlib";
+import { DRACOLoader, GLTF, GLTFLoader } from "three-stdlib";
 import { setCharTimeline } from "../../utils/GsapScroll";
 
 const setCharacter = (
@@ -7,7 +7,10 @@ const setCharacter = (
   scene: THREE.Scene,
   camera: THREE.PerspectiveCamera
 ) => {
+  const dracoLoader = new DRACOLoader();
+  dracoLoader.setDecoderPath("/draco/");
   const loader = new GLTFLoader();
+  loader.setDRACOLoader(dracoLoader);
 
   const loadCharacter = (): Promise<GLTF | null> => {
     return new Promise<GLTF | null>(async (resolve, reject) => {
@@ -16,12 +19,6 @@ const setCharacter = (
           "/character.glb",
           async (gltf) => {
             let character = gltf.scene;
-            // Debug: identify object names and animations
-            const allNames: string[] = [];
-            character.traverse((obj) => { if (obj.name) allNames.push(obj.name); });
-            console.log("[GLB] Direct children:", character.children.map((c: any) => c.name).join(", "));
-            console.log("[GLB] All objects:", allNames.join(", "));
-            console.log("[GLB] Animations:", gltf.animations.map((a) => a.name).join(", "));
             character.position.y = -1;
             await renderer.compileAsync(character, camera, scene);
             character.traverse((child: any) => {

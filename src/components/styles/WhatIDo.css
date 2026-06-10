@@ -163,4 +163,8 @@
     position: relative;
     top: auto;
   }
+  /* heading on one line — the stacked two-line layout is desktop-only */
+  .whatido-heading div {
+    display: inline;
+  }
 }

@@ -128,3 +128,21 @@
   opacity: 0;
   transition: opacity 0.2s ease;
 }
+
+/* Mobile: smaller pill, bigger marquee so the background text stays visible */
+@media (max-width: 768px) {
+  .loading-marquee-text {
+    font-size: 64px;
+  }
+  .loading-bar-outer {
+    padding: 14px 28px;
+    gap: 8px;
+  }
+  .loading-bar-track {
+    width: 150px;
+  }
+  .loading-percent-text {
+    font-size: 11px;
+    min-width: 60px;
+  }
+}

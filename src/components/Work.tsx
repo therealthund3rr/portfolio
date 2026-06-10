@@ -40,47 +40,44 @@ const Work = () => {
         ease: "power2.out",
       }, 0.35);
 
-    if (window.innerWidth <= 768) {
-      return () => {
-        revealTl.kill();
-        ScrollTrigger.getById("work-reveal")?.kill();
-      };
-    }
-
-    let translateX = 0;
-
-    function setTranslateX() {
+    // matchMedia: the horizontal pin exists only above 768px and is reverted
+    // automatically when the viewport shrinks (DevTools toggle, tablet rotation)
+    const mm = gsap.matchMedia();
+    mm.add("(min-width: 769px)", () => {
       const track = document.querySelector(".work-track") as HTMLElement;
       if (!track) return;
-      translateX = track.scrollWidth - window.innerWidth;
-      if (translateX < 0) translateX = 0;
-    }
 
-    setTranslateX();
+      const getTranslateX = () =>
+        Math.max(0, track.scrollWidth - window.innerWidth);
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".work-section",
-        start: "top top",
-        end: () => `+=${translateX}`,
-        scrub: 1,
-        pin: true,
-        pinSpacing: true,
-        anticipatePin: 1,
-        id: "work-scroll",
-        invalidateOnRefresh: true,
-      },
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".work-section",
+          start: "top top",
+          end: () => `+=${getTranslateX()}`,
+          scrub: 1,
+          pin: true,
+          pinSpacing: true,
+          anticipatePin: 1,
+          id: "work-scroll",
+          invalidateOnRefresh: true,
+        },
+      });
+
+      tl.to(track, { x: () => -getTranslateX(), ease: "none" });
+
+      ScrollTrigger.refresh();
+
+      return () => {
+        tl.scrollTrigger?.kill();
+        tl.kill();
+      };
     });
-
-    tl.to(".work-track", { x: -translateX, ease: "none" });
-
-    ScrollTrigger.refresh();
 
     return () => {
       revealTl.kill();
-      tl.kill();
       ScrollTrigger.getById("work-reveal")?.kill();
-      ScrollTrigger.getById("work-scroll")?.kill();
+      mm.revert();
     };
   }, []);
 

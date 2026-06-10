@@ -10,37 +10,6 @@ export function setCharTimeline(
 ) {
   if (!character) return;
 
-  const tl1 = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".landing-section",
-      start: "top top",
-      end: "bottom top",
-      scrub: true,
-      invalidateOnRefresh: true,
-    },
-  });
-
-  const tl2 = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".about-section",
-      start: "center 55%",
-      end: "bottom top",
-      scrub: true,
-      invalidateOnRefresh: true,
-    },
-  });
-
-  // tl3: character scrolls UP together with WhatIDo section (reference pattern)
-  const tl3 = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".whatido-section",
-      start: "top top",
-      end: "bottom top",
-      scrub: true,
-      invalidateOnRefresh: true,
-    },
-  });
-
   let screenLight: any = null;
 
   const monitorObj = character.getObjectByName("monitor") as THREE.Object3D;
@@ -79,7 +48,41 @@ export function setCharTimeline(
 
   const neckBone = character.getObjectByName("spine005");
 
-  if (window.innerWidth > 1024) {
+  // matchMedia creates the desktop timelines when the viewport is >1024px and
+  // reverts them automatically when it shrinks (DevTools toggle, tablet rotation)
+  const mm = gsap.matchMedia();
+  mm.add("(min-width: 1025px)", () => {
+    const tl1 = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".landing-section",
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+        invalidateOnRefresh: true,
+      },
+    });
+
+    const tl2 = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".about-section",
+        start: "center 55%",
+        end: "bottom top",
+        scrub: true,
+        invalidateOnRefresh: true,
+      },
+    });
+
+    // tl3: character scrolls UP together with WhatIDo section (reference pattern)
+    const tl3 = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".whatido-section",
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+        invalidateOnRefresh: true,
+      },
+    });
+
     tl1
       .fromTo(character.rotation, { y: 0 }, { y: 0.7, duration: 1 }, 0)
       .to(camera.position, { z: 22 }, 0)
@@ -140,7 +143,7 @@ export function setCharTimeline(
     tl3
       .fromTo(".character-model", { y: "0%" }, { y: "-100%", duration: 1, ease: "none" }, 0)
       .to(character.rotation, { x: -0.04, duration: 0.5 }, 0);
-  }
+  });
 }
 
 export function setAllTimeline() {
@@ -161,7 +164,56 @@ export function setAllTimeline() {
     .fromTo(".career-item", { opacity: 0, x: -20 }, { opacity: 1, x: 0, stagger: 0.12, duration: 0.5 }, 0.1)
     .fromTo(".career-bar-fill", { width: "0%" }, { width: (i: number) => `${[65, 85, 78, 70, 60][i] ?? 60}%`, duration: 0.8, stagger: 0.12 }, 0.3);
 
-  if (window.innerWidth > 1024) {
-    careerTimeline.fromTo(".career-section", { y: 0 }, { y: "15%", duration: 0.5, delay: 0.2 }, 0);
-  }
+  const mm = gsap.matchMedia();
+  mm.add("(min-width: 1025px)", () => {
+    const sectionShift = gsap.fromTo(
+      ".career-section",
+      { y: 0 },
+      {
+        y: "15%",
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".career-section",
+          start: "top 55%",
+          end: "bottom 25%",
+          scrub: 1.5,
+          invalidateOnRefresh: true,
+        },
+      }
+    );
+    return () => {
+      sectionShift.scrollTrigger?.kill();
+      sectionShift.kill();
+    };
+  });
+
+  // Mobile About reveal: the split-text animation only runs >=900px,
+  // so below that the section gets a lightweight fade + slide instead
+  mm.add("(max-width: 899px)", () => {
+    const aboutReveal = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".about-section",
+        start: "top 75%",
+        toggleActions: "play none none reverse",
+      },
+    });
+
+    aboutReveal
+      .fromTo(
+        ".about-label",
+        { opacity: 0, y: 28 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }
+      )
+      .fromTo(
+        ".about-bio",
+        { opacity: 0, y: 28 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", stagger: 0.12 },
+        0.1
+      );
+
+    return () => {
+      aboutReveal.scrollTrigger?.kill();
+      aboutReveal.kill();
+    };
+  });
 }
